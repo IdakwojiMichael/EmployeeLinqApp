@@ -1,0 +1,41 @@
+﻿@model List<EmployeeLinqApp.Models.Employee>
+
+@{
+    ViewData["Title"] = "Employees";
+    var searchValue = Context.Request.Query["search"];
+}
+
+<h2>Employees</h2>
+
+<form method="get">
+    <input type="text" name="search" placeholder="Search by name or department" value="@searchValue" />
+    <button type="submit" class="btn btn-primary btn-sm">Search</button>
+    <a class="btn btn-success btn-sm" asp-action="Create">Add Employee</a>
+</form>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Salary</th>
+            <th>Hire Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var emp in Model)
+        {
+            <tr>
+                <td>@emp.Name</td>
+                <td>@emp.Department</td>
+                <td>@emp.Salary.ToString("C")</td>
+                <td>@emp.HireDate.ToShortDateString()</td>
+                <td>
+                    <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@emp.Id">Edit</a>
+                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@emp.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
